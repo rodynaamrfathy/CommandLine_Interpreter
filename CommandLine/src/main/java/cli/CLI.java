@@ -36,6 +36,7 @@ public class CLI {
             System.out.print("> ");
             String input = scanner.nextLine();
             if (input.equals("exit")) {
+                System.out.println("Disconnecting");
                 break;
             }
             CommandExecutor.executeCommand(input);
