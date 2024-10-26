@@ -3,6 +3,7 @@ package main.java.cli;
 import java.util.Scanner;
 
 public class CLI {
+<<<<<<< HEAD
     public static void main(String[] args) {
         // Create a Scanner object to read user input
         Scanner scanner = new Scanner(System.in);
@@ -28,6 +29,18 @@ public class CLI {
         }
 
         // Close the scanner
+=======
+    public void start() {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.print("> ");
+            String input = scanner.nextLine();
+            if (input.equals("exit")) {
+                break;
+            }
+            CommandExecutor.executeCommand(input);
+        }
+>>>>>>> 077f207e549fba00a6953509eb53483ab1a2d8c8
         scanner.close();
     }
 }
