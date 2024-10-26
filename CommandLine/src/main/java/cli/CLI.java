@@ -1,4 +1,4 @@
-package cli;
+package main.java.cli;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;
