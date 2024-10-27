@@ -1,7 +1,10 @@
 package main.java.cli;
 
-/*
+import main.java.cli.commands.Command;
+import main.java.cli.commands.PwdCommand;
 
+
+/*
 
 2. CommandExecuter File
 Functionality:
@@ -15,6 +18,17 @@ Functionality:
 */
 
 public class CommandExecutor {
-    private static void executeCommand(String input) {
+    static void executeCommand(String command) {
+        Command cmd;
+        switch (command.toLowerCase()) {
+            case "pwd" :
+                cmd = new PwdCommand();
+                break;
+            default:
+                System.out.println("Command not recognized. Please try again.");
+
+                return;  
+        }
+        cmd.execute();
     }
 }
