@@ -1,4 +1,4 @@
-package main.java.cli;
+package cli;
 
 /*
 

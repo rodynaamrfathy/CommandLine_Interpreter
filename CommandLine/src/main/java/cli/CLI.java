@@ -1,4 +1,4 @@
-package main.java.cli;
+package cli;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -34,27 +34,27 @@ public class CLI {
                         System.out.println("Exiting the CLI. Goodbye!");
                         break;
                     } else {
-                        // Start a new thread to handle the command
-                        @SuppressWarnings("static-access") 
-                        Thread commandThread = new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                CommandExecutor executor = new CommandExecutor();
-                                executor.executeCommand(command);
-                            }
-                        });
-                        
-                        commandThread.start();
-
-                        commandThread.join();
+                        executeCommand(command); // Call the command execution method
                     }
                 } catch (NoSuchElementException e) {
                     System.out.println("No input available. Exiting.");
                     break;
-                } catch (InterruptedException e) {
-                    System.out.println("Command execution interrupted.");
                 }
             }
+        }
+    }
+
+    public static void executeCommand(String command) {
+        Thread commandThread = new Thread(() -> {
+            CommandExecutor executor = new CommandExecutor();
+            executor.executeCommand(command);
+        });
+
+        commandThread.start();
+        try {
+            commandThread.join();
+        } catch (InterruptedException e) {
+            System.out.println("Command execution interrupted.");
         }
     }
 }

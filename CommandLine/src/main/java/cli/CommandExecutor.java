@@ -1,7 +1,8 @@
-package main.java.cli;
+package cli;
 
-import main.java.cli.commands.Command;
-import main.java.cli.commands.PwdCommand;
+import cli.commands.Command;
+import cli.commands.PwdCommand;
+
 
 
 /*

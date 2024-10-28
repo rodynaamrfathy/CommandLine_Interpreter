@@ -1,4 +1,4 @@
-package main.java.cli.commands;
+package cli.commands;
 
 public class PwdCommand  implements Command{
 
