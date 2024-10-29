@@ -35,19 +35,25 @@ public class CommandExecutor {
 
         Command cmd;
 
-        // hshil el file name w el operator ">" meen el args 
-        // array w ha save el file name fy variable
+        // Variables to store file name and append mode
         String outputFile = null;
-        
-        // Check for output redirection symbol '>'
+        boolean appendMode = false;
+
+        // Check for output redirection symbols '>' and '>>'
         for (int i = 0; i < args.length; i++) {
             if (args[i].equals(">") && i + 1 < args.length) {
                 outputFile = args[i + 1]; // Get the file name to redirect output
-                args = Arrays.copyOfRange(args, 0, i); // Remove output redirection from args
+                appendMode = false; // Set to overwrite mode
+                args = Arrays.copyOfRange(args, 0, i); // Remove redirection part from args
+                break;
+            } else if (args[i].equals(">>") && i + 1 < args.length) {
+                outputFile = args[i + 1]; // Get the file name to redirect output
+                appendMode = true; // Set to append mode
+                args = Arrays.copyOfRange(args, 0, i); // Remove redirection part from args
                 break;
             }
         }
-        
+
         // Determine the command to execute based on commandName
         switch (commandName.toLowerCase()) {
             case "pwd":
@@ -56,9 +62,9 @@ public class CommandExecutor {
             case "ls":
                 cmd = new LsCommand();
                 break;
-            case  "cd" :
+            case "cd":
                 cmd = new CdCommand();
-                break; 
+                break;
             case "cat":
                 cmd = new CatCommand();
                 break;
@@ -87,19 +93,20 @@ public class CommandExecutor {
                 System.out.println("Command not recognized. Please try again.");
                 return;
         }
-        
+
         // Execute the command and check the return value for success/failure
-        boolean success = executeWithRedirection(cmd, args, outputFile);
+        boolean success = executeWithRedirection(cmd, args, outputFile, appendMode);
         if (!success) {
             System.out.println("Error executing command: " + commandName);
         }
     }
-    private static boolean executeWithRedirection(Command cmd, String[] args, String outputFile) {
+
+    private static boolean executeWithRedirection(Command cmd, String[] args, String outputFile, boolean appendMode) {
         PrintStream originalOut = System.out; // Save original output stream
-        
+
         if (outputFile != null) {
             try {
-                FileOutputStream fos = new FileOutputStream(outputFile, false); // false for overwrite
+                FileOutputStream fos = new FileOutputStream(outputFile, appendMode); // true for append, false for overwrite
                 System.setOut(new PrintStream(fos));
             } catch (IOException e) {
                 System.out.println("Error opening file: " + e.getMessage());
