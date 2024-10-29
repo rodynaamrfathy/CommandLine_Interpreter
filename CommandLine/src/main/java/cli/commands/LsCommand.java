@@ -70,6 +70,10 @@ public class LsCommand implements Command {
             if (!showHidden && file.isHidden()) {
                 continue; // Skip hidden files
             }
+            // Skip files that start with a dot (.) for normal ls command
+            if (!showHidden && file.getName().startsWith(".")) {
+                continue; // Skip hidden files (those starting with a dot)
+            }
 
             // Print file information
             if (showLongFormat) {

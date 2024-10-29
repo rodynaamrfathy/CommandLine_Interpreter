@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="cli.CdCommandTest" time="0.077" tests="6" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="cli.CdCommandTest" time="0.061" tests="3" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Microsoft\jdk-17.0.12.7-hotspot\bin"/>
-    <property name="sun.java.command" value="C:\Users\Owner\AppData\Local\Temp\surefire725710284903951083\surefirebooter1317257210852938634.jar C:\Users\Owner\AppData\Local\Temp\surefire725710284903951083 2024-10-29T16-13-20_322-jvmRun1 surefire1713076508975439915tmp surefire_014628176185221293845tmp"/>
+    <property name="sun.java.command" value="C:\Users\Owner\AppData\Local\Temp\surefire5048146572478950518\surefirebooter4994746478832233267.jar C:\Users\Owner\AppData\Local\Temp\surefire5048146572478950518 2024-10-29T21-58-36_138-jvmRun1 surefire5505795611821442476tmp surefire_03494414812503793091tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\Owner\.vscode\programs\CommandLine_Interpreter\CommandLine\target\test-classes;C:\Users\Owner\.vscode\programs\CommandLine_Interpreter\CommandLine\target\classes;C:\Users\Owner\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.8.1\junit-jupiter-api-5.8.1.jar;C:\Users\Owner\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\Owner\.m2\repository\org\junit\platform\junit-platform-commons\1.8.1\junit-platform-commons-1.8.1.jar;C:\Users\Owner\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Owner\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.8.1\junit-jupiter-engine-5.8.1.jar;C:\Users\Owner\.m2\repository\org\junit\platform\junit-platform-engine\1.8.1\junit-platform-engine-1.8.1.jar;C:\Users\Owner\.m2\repository\org\mockito\mockito-core\4.6.1\mockito-core-4.6.1.jar;C:\Users\Owner\.m2\repository\net\bytebuddy\byte-buddy\1.12.10\byte-buddy-1.12.10.jar;C:\Users\Owner\.m2\repository\net\bytebuddy\byte-buddy-agent\1.12.10\byte-buddy-agent-1.12.10.jar;C:\Users\Owner\.m2\repository\org\objenesis\objenesis\3.2\objenesis-3.2.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\Owner\AppData\Local\Temp\surefire725710284903951083\surefirebooter1317257210852938634.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Owner\AppData\Local\Temp\surefire5048146572478950518\surefirebooter4994746478832233267.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="17.0.12+7-LTS"/>
@@ -57,10 +57,7 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="testCdToPreviousDirectory" classname="cli.CdCommandTest" time="0.05"/>
-  <testcase name="testCdToHomeDirectory" classname="cli.CdCommandTest" time="0"/>
-  <testcase name="testCdToCurrentDirectory" classname="cli.CdCommandTest" time="0"/>
-  <testcase name="testCdToHomeFromCurrentDirectory" classname="cli.CdCommandTest" time="0.002"/>
-  <testcase name="testCdToParentDirectory" classname="cli.CdCommandTest" time="0.002"/>
-  <testcase name="testCdToInvalidDirectory" classname="cli.CdCommandTest" time="0.002"/>
+  <testcase name="testCdToCurrentDirectory" classname="cli.CdCommandTest" time="0.049"/>
+  <testcase name="testCdToValidDirectory" classname="cli.CdCommandTest" time="0"/>
+  <testcase name="testCdToInvalidDirectory" classname="cli.CdCommandTest" time="0"/>
 </testsuite>
