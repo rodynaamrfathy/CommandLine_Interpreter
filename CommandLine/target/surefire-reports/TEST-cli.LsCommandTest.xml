@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="cli.CdCommandTest" time="0.077" tests="6" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="cli.LsCommandTest" time="0.022" tests="4" errors="0" skipped="0" failures="2">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Microsoft\jdk-17.0.12.7-hotspot\bin"/>
-    <property name="sun.java.command" value="C:\Users\Owner\AppData\Local\Temp\surefire725710284903951083\surefirebooter1317257210852938634.jar C:\Users\Owner\AppData\Local\Temp\surefire725710284903951083 2024-10-29T16-13-20_322-jvmRun1 surefire1713076508975439915tmp surefire_014628176185221293845tmp"/>
+    <property name="sun.java.command" value="C:\Users\Owner\AppData\Local\Temp\surefire2682524355689354160\surefirebooter14014556481723606325.jar C:\Users\Owner\AppData\Local\Temp\surefire2682524355689354160 2024-10-28T23-42-15_261-jvmRun1 surefire6980610064398712571tmp surefire_07933119094433245250tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\Owner\.vscode\programs\CommandLine_Interpreter\CommandLine\target\test-classes;C:\Users\Owner\.vscode\programs\CommandLine_Interpreter\CommandLine\target\classes;C:\Users\Owner\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.8.1\junit-jupiter-api-5.8.1.jar;C:\Users\Owner\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\Owner\.m2\repository\org\junit\platform\junit-platform-commons\1.8.1\junit-platform-commons-1.8.1.jar;C:\Users\Owner\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Owner\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.8.1\junit-jupiter-engine-5.8.1.jar;C:\Users\Owner\.m2\repository\org\junit\platform\junit-platform-engine\1.8.1\junit-platform-engine-1.8.1.jar;C:\Users\Owner\.m2\repository\org\mockito\mockito-core\4.6.1\mockito-core-4.6.1.jar;C:\Users\Owner\.m2\repository\net\bytebuddy\byte-buddy\1.12.10\byte-buddy-1.12.10.jar;C:\Users\Owner\.m2\repository\net\bytebuddy\byte-buddy-agent\1.12.10\byte-buddy-agent-1.12.10.jar;C:\Users\Owner\.m2\repository\org\objenesis\objenesis\3.2\objenesis-3.2.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\Owner\AppData\Local\Temp\surefire725710284903951083\surefirebooter1317257210852938634.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Owner\AppData\Local\Temp\surefire2682524355689354160\surefirebooter14014556481723606325.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="17.0.12+7-LTS"/>
@@ -57,10 +57,16 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="testCdToPreviousDirectory" classname="cli.CdCommandTest" time="0.05"/>
-  <testcase name="testCdToHomeDirectory" classname="cli.CdCommandTest" time="0"/>
-  <testcase name="testCdToCurrentDirectory" classname="cli.CdCommandTest" time="0"/>
-  <testcase name="testCdToHomeFromCurrentDirectory" classname="cli.CdCommandTest" time="0.002"/>
-  <testcase name="testCdToParentDirectory" classname="cli.CdCommandTest" time="0.002"/>
-  <testcase name="testCdToInvalidDirectory" classname="cli.CdCommandTest" time="0.002"/>
+  <testcase name="testExecuteWithoutOptions" classname="cli.LsCommandTest" time="0"/>
+  <testcase name="testExecuteWithHiddenOption" classname="cli.LsCommandTest" time="0"/>
+  <testcase name="testExecuteWithRecursiveOption" classname="cli.LsCommandTest" time="0.011">
+    <failure message="Output should not contain hidden files ==&gt; expected: &lt;false&gt; but was: &lt;true&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Output should not contain hidden files ==> expected: <false> but was: <true>
+	at cli.LsCommandTest.testExecuteWithRecursiveOption(LsCommandTest.java:113)
+]]></failure>
+  </testcase>
+  <testcase name="testExecuteWithLongFormatOption" classname="cli.LsCommandTest" time="0.011">
+    <failure message="Output should not contain hidden files ==&gt; expected: &lt;false&gt; but was: &lt;true&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Output should not contain hidden files ==> expected: <false> but was: <true>
+	at cli.LsCommandTest.testExecuteWithLongFormatOption(LsCommandTest.java:94)
+]]></failure>
+  </testcase>
 </testsuite>

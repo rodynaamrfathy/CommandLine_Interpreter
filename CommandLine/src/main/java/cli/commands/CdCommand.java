@@ -4,15 +4,13 @@ import java.io.File;
 import java.io.IOException;
 
 public class CdCommand implements Command {
-    private String path;
     private static String previousDir = System.getProperty("user.dir");
 
-    public CdCommand(String path) {
-        this.path = path;
-    }
+    @Override
+    public boolean execute(String[] args) {
+        // Check if any arguments were provided
+        String path = (args != null && args.length > 0) ? args[0] : "";
 
-    public boolean execute() {
-        
         if (path.isEmpty()) {
             previousDir = System.getProperty("user.dir"); 
             System.setProperty("user.dir", System.getProperty("user.home"));

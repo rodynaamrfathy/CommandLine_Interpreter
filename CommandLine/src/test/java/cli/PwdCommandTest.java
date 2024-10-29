@@ -2,10 +2,8 @@ package cli;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
-
 import cli.commands.Command;
 import cli.commands.PwdCommand;
 
@@ -19,9 +17,9 @@ public class PwdCommandTest {
         System.setOut(new PrintStream(outputStream));
 
         try {
-            // Execute the PwdCommand and capture the boolean result
+            // Execute the PwdCommand with no arguments and capture the boolean result
             Command pwdCommand = new PwdCommand();
-            boolean result = pwdCommand.execute();
+            boolean result = pwdCommand.execute(new String[]{}); // Pass an empty array
 
             // Get the output and verify it contains the expected result
             String output = outputStream.toString().trim();

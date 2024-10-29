@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: cli.LsCommandTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.022 s <<< FAILURE! - in cli.LsCommandTest
+testExecuteWithRecursiveOption  Time elapsed: 0.011 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Output should not contain hidden files ==> expected: <false> but was: <true>
+	at cli.LsCommandTest.testExecuteWithRecursiveOption(LsCommandTest.java:113)
+
+testExecuteWithLongFormatOption  Time elapsed: 0.011 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Output should not contain hidden files ==> expected: <false> but was: <true>
+	at cli.LsCommandTest.testExecuteWithLongFormatOption(LsCommandTest.java:94)
+

@@ -6,7 +6,7 @@ import java.io.IOException;
 public class PwdCommand implements Command {
 
     @Override
-    public boolean execute() {
+    public boolean execute(String[] args) {
         try {
             File currentDir = new File(System.getProperty("user.dir"));
             System.out.println(currentDir.getCanonicalPath());

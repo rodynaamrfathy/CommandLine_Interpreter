@@ -1,29 +1,53 @@
 package cli;
 
-import cli.commands.CdCommand;
+import java.util.Arrays;
+
 import cli.commands.Command;
+import cli.commands.LsCommand;
 import cli.commands.PwdCommand;
+import cli.commands.CdCommand;
+import cli.commands.CatCommand;
+
+/*
+CommandExecutor:
+- Interprets commands entered by the user.
+- Splits the input string to determine the command and its arguments.
+- Uses a switch to create an instance of the appropriate command.
+- Executes the command and displays messages based on success or failure.
+*/
 
 public class CommandExecutor {
-    static void executeCommand(String command) {
+    public static void executeCommand(String input) {
+        // Split the input into tokens
+        String[] tokens = input.split(" ");
+        String commandName = tokens[0];
+        String[] args = Arrays.copyOfRange(tokens, 1, tokens.length);
+
         Command cmd;
-
-        // Split the command into parts (command name and arguments)
-        String[] parts = command.trim().split(" ", 2);
-        String commandName = parts[0].toLowerCase();
-        String argument = parts.length > 1 ? parts[1] : "";
-
-        switch (commandName) {
+        
+        // Determine the command to execute based on commandName
+        switch (commandName.toLowerCase()) {
             case "pwd":
                 cmd = new PwdCommand();
                 break;
-            case "cd":
-                cmd = new CdCommand(argument); 
+            case "ls":
+                cmd = new LsCommand();
+                break;
+            case  "cd" :
+                cmd = new CdCommand();
+                break; 
+            case "cat":
+                cmd = new CatCommand();
                 break;
             default:
                 System.out.println("Command not recognized. Please try again.");
-                return;  
+                return;
         }
-        cmd.execute();
+        
+        // Execute the command and check the return value for success/failure
+        boolean success = cmd.execute(args);
+        if (!success) {
+            System.out.println("Error executing command: " + commandName);
+        }
     }
 }
