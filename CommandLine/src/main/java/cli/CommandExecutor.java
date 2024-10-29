@@ -1,5 +1,8 @@
 package cli;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Arrays;
 
 import cli.commands.CatCommand;
@@ -31,6 +34,19 @@ public class CommandExecutor {
         String[] args = Arrays.copyOfRange(tokens, 1, tokens.length);
 
         Command cmd;
+
+        // hshil el file name w el operator ">" meen el args 
+        // array w ha save el file name fy variable
+        String outputFile = null;
+        
+        // Check for output redirection symbol '>'
+        for (int i = 0; i < args.length; i++) {
+            if (args[i].equals(">") && i + 1 < args.length) {
+                outputFile = args[i + 1]; // Get the file name to redirect output
+                args = Arrays.copyOfRange(args, 0, i); // Remove output redirection from args
+                break;
+            }
+        }
         
         // Determine the command to execute based on commandName
         switch (commandName.toLowerCase()) {
@@ -73,9 +89,30 @@ public class CommandExecutor {
         }
         
         // Execute the command and check the return value for success/failure
-        boolean success = cmd.execute(args);
+        boolean success = executeWithRedirection(cmd, args, outputFile);
         if (!success) {
             System.out.println("Error executing command: " + commandName);
         }
+    }
+    private static boolean executeWithRedirection(Command cmd, String[] args, String outputFile) {
+        PrintStream originalOut = System.out; // Save original output stream
+        
+        if (outputFile != null) {
+            try {
+                FileOutputStream fos = new FileOutputStream(outputFile, false); // false for overwrite
+                System.setOut(new PrintStream(fos));
+            } catch (IOException e) {
+                System.out.println("Error opening file: " + e.getMessage());
+                return false;
+            }
+        }
+
+        boolean success = cmd.execute(args); // Execute the command
+
+        if (outputFile != null) {
+            System.setOut(originalOut); // Restore original output stream
+        }
+
+        return success;
     }
 }
