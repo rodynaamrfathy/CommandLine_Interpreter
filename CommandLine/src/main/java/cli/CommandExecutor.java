@@ -13,6 +13,7 @@ import cli.commands.RmCommand;
 import cli.commands.RmdirCommand;
 import cli.commands.TouchCommand;
 import cli.commands.ClearCommand;
+import cli.commands.HelpCommand;
 
 /*
 CommandExecutor:
@@ -62,6 +63,9 @@ public class CommandExecutor {
                 break;
             case "clear":
                 cmd = new ClearCommand();
+                break;
+            case "help":
+                cmd = new HelpCommand();
                 break;
             default:
                 System.out.println("Command not recognized. Please try again.");
