@@ -9,7 +9,8 @@ public class PwdCommand implements Command {
     public boolean execute(String[] args) {
         try {
             File currentDir = new File(System.getProperty("user.dir"));
-            System.out.println(currentDir.getCanonicalPath());
+            String canonicalPath = currentDir.getCanonicalPath();
+            System.out.println(canonicalPath);
             return true;
         } catch (IOException e) {
             System.out.println("Error retrieving current directory: " + e.getMessage());
