@@ -9,6 +9,7 @@ import cli.commands.LsCommand;
 import cli.commands.MkdirCommand;
 import cli.commands.MvCommand;
 import cli.commands.PwdCommand;
+import cli.commands.RmCommand;
 import cli.commands.RmdirCommand;
 import cli.commands.TouchCommand;
 
@@ -54,6 +55,9 @@ public class CommandExecutor {
                 break;
             case "mv":
                 cmd = new MvCommand();
+                break;
+            case "rm":
+                cmd = new RmCommand();
                 break;
             default:
                 System.out.println("Command not recognized. Please try again.");
