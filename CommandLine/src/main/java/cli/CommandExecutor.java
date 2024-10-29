@@ -2,11 +2,12 @@ package cli;
 
 import java.util.Arrays;
 
+import cli.commands.CatCommand;
+import cli.commands.CdCommand;
 import cli.commands.Command;
 import cli.commands.LsCommand;
+import cli.commands.MkdirCommand;
 import cli.commands.PwdCommand;
-import cli.commands.CdCommand;
-import cli.commands.CatCommand;
 
 /*
 CommandExecutor:
@@ -38,6 +39,9 @@ public class CommandExecutor {
                 break; 
             case "cat":
                 cmd = new CatCommand();
+                break;
+            case "mkdir":
+                cmd = new MkdirCommand();
                 break;
             default:
                 System.out.println("Command not recognized. Please try again.");
