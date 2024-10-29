@@ -8,6 +8,7 @@ import cli.commands.Command;
 import cli.commands.LsCommand;
 import cli.commands.MkdirCommand;
 import cli.commands.PwdCommand;
+import cli.commands.RmdirCommand;
 
 /*
 CommandExecutor:
@@ -42,6 +43,9 @@ public class CommandExecutor {
                 break;
             case "mkdir":
                 cmd = new MkdirCommand();
+                break;
+            case "rmdir":
+                cmd = new RmdirCommand();
                 break;
             default:
                 System.out.println("Command not recognized. Please try again.");
