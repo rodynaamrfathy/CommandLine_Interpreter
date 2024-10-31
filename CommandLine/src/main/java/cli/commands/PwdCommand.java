@@ -8,7 +8,12 @@ public class PwdCommand implements Command {
     @Override
     public boolean execute(String[] args) {
         try {
-            File currentDir = new File(System.getProperty("user.dir"));
+            String userDir = System.getProperty("user.dir");
+            if (userDir == null) {
+                System.out.println("User directory is null");
+                return false;
+            }
+            File currentDir = new File(userDir);
             String canonicalPath = currentDir.getCanonicalPath();
             System.out.println(canonicalPath);
             return true;
@@ -17,4 +22,5 @@ public class PwdCommand implements Command {
             return false;
         }
     }
+
 }

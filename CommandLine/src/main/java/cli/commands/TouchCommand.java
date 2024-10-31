@@ -9,51 +9,55 @@ public class TouchCommand implements Command {
 
     @Override
     public boolean execute(String[] args) {
-        // Ensure file path is provided
-        if (args.length == 0) {
-            System.out.println("Error: No file path provided.");
+        // Check if args is null or empty
+        if (args == null || args.length == 0) {
             return false;
         }
 
-        String fullPath = args[0];
+        String fileName;
+        File directory;
 
-        // Split the path into directory and file name
-        String[] pathParts = fullPath.split("/");
-        String fileName = pathParts[pathParts.length - 1]; // Last part is the file name
-        String directoryPath = String.join("/", java.util.Arrays.copyOf(pathParts, pathParts.length - 1)); // All parts except last are the directory path
+        // If one argument is provided, use the current directory
+        if (args.length == 1) {
+            fileName = args[0];
+            directory = new File(System.getProperty("user.dir")); // Use current directory
+        } 
+        // If two arguments are provided, use the provided directory path
+        else {
+            fileName = args[0]; // First argument is the filename
+            String dirPath = args[1]; // Second argument is the directory path
+            directory = new File(dirPath);
+            // Debug: Check if directory exists
+        }
 
-        // Create the full file path
-        File directory = new File(System.getProperty("user.dir") + File.separator + directoryPath);
+        // Check if the directory exists if two arguments were provided
+        if (args.length > 1 && !directory.exists()) {
+            return false; // Prevent file creation if directory doesn't exist
+        }
+
         File file = new File(directory, fileName);
 
         try {
-            // Check if the file exists
             if (file.exists()) {
-                // If it exists, update the last modified time
+                // Update the file's last modified timestamp
                 boolean updated = file.setLastModified(System.currentTimeMillis());
-                if (updated) {
-                    System.out.println("File updated successfully.");
-                } else {
-                    System.out.println("Failed to update file.");
-                }
+                
                 return updated;
             } else {
-                // If it does not exist, create the directory (if needed) and then the file
-                if (!directory.exists() && !directory.mkdirs()) {
-                    System.out.println("Error: Failed to create directory path.");
-                    return false;
-                }
-                
-                if (file.createNewFile()) {
-                    System.out.println("File created successfully.");
-                    return true;
+                // Create the file only if the directory exists
+                if (args.length > 1 || directory.exists()) {
+                    if (file.createNewFile()) {
+                        return true;
+                    } else {
+                        System.out.println("Error: Failed to create file.");
+                        return false;
+                    }
                 } else {
-                    System.out.println("Error: Failed to create file.");
                     return false;
                 }
             }
         } catch (IOException e) {
-            System.out.println("touch: cannot touch " + fullPath + ": No such file or directory.");
+            System.out.println("touch: cannot touch " + file.getAbsolutePath() + ": " + e.getMessage());
             return false;
         }
     }

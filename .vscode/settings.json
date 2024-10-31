@@ -3,5 +3,5 @@
     "CommandLine\\src"
   ],
   "java.project.referencedLibraries": [],
-  "java.configuration.updateBuildConfiguration": "interactive"
+  "java.configuration.updateBuildConfiguration": "disabled"
 }

@@ -1,0 +1,5 @@
+cli\MvCommandTest.class
+cli\PwdCommandTest.class
+cli\MkdirCommandTest.class
+cli\LsCommandTest.class
+cli\CatCommandTest.class

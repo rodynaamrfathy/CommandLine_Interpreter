@@ -1,0 +1,12 @@
+cli\commands\CdCommand.class
+cli\commands\Command.class
+cli\commands\LsCommand.class
+cli\commands\ClearCommand.class
+cli\commands\RmCommand.class
+cli\CommandUtils.class
+cli\commands\MkdirCommand.class
+cli\commands\HelpCommand.class
+cli\commands\MvCommand.class
+cli\commands\TouchCommand.class
+cli\commands\CatCommand.class
+cli\commands\PwdCommand.class
