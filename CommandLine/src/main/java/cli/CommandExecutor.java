@@ -17,7 +17,7 @@ import cli.commands.PwdCommand;
 import cli.commands.RmCommand;
 import cli.commands.RmdirCommand;
 import cli.commands.TouchCommand;
-
+import cli.commands.WcCommand;
 /*
 CommandExecutor:
 - Interprets commands entered by the user.
@@ -28,77 +28,79 @@ CommandExecutor:
 
 public class CommandExecutor {
     public static void executeCommand(String input) {
-        // Split the input into tokens
-        String[] tokens = input.split(" ");
-        String commandName = tokens[0];
-        String[] args = Arrays.copyOfRange(tokens, 1, tokens.length);
+        // Split the input into commands by the pipe character '|'
+        String[] commands = input.split("\\|");
 
-        Command cmd;
+        // Prepare to store command objects and arguments
+        Command[] cmdArray = new Command[commands.length];
+        String[][] argsArray = new String[commands.length][];
 
-        // Variables to store file name and append mode
-        String outputFile = null;
-        boolean appendMode = false;
+        for (int i = 0; i < commands.length; i++) {
+            String commandLine = commands[i].trim(); // Trim whitespace
+            // Split the command line into tokens
+            String[] tokens = commandLine.split(" ");
+            String commandName = tokens[0];
+            String[] args = Arrays.copyOfRange(tokens, 1, tokens.length);
 
-        // Check for output redirection symbols '>' and '>>'
-        for (int i = 0; i < args.length; i++) {
-            if (args[i].equals(">") && i + 1 < args.length) {
-                outputFile = args[i + 1]; // Get the file name to redirect output
-                appendMode = false; // Set to overwrite mode
-                args = Arrays.copyOfRange(args, 0, i); // Remove redirection part from args
-                break;
-            } else if (args[i].equals(">>") && i + 1 < args.length) {
-                outputFile = args[i + 1]; // Get the file name to redirect output
-                appendMode = true; // Set to append mode
-                args = Arrays.copyOfRange(args, 0, i); // Remove redirection part from args
-                break;
+            // Create command instance based on command name
+            cmdArray[i] = createCommand(commandName);
+            argsArray[i] = args; // Store arguments for each command
+        }
+
+        // Execute commands with piping
+        executeWithPipes(cmdArray, argsArray);
+    }
+
+    private static Command createCommand(String commandName) {
+        switch (commandName.toLowerCase()) {
+            case "pwd": return new PwdCommand();
+            case "ls": return new LsCommand();
+            case "cd": return new CdCommand();
+            case "cat": return new CatCommand();
+            case "mkdir": return new MkdirCommand();
+            case "rmdir": return new RmdirCommand();
+            case "touch": return new TouchCommand();
+            case "mv": return new MvCommand();
+            case "rm": return new RmCommand();
+            case "clear": return new ClearCommand();
+            case "help": return new HelpCommand();
+            case "wc" : return new WcCommand();
+            default: throw new IllegalArgumentException("Command not recognized: " + commandName);
+        }
+    }
+
+    private static void executeWithPipes(Command[] commands, String[][] argsArray) {
+        PrintStream originalOut = System.out; // Save the original output stream
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        
+        for (int i = 0; i < commands.length; i++) {
+            // Check for output redirection symbols '>' and '>>' in the current command args
+            String outputFile = null;
+            boolean appendMode = false;
+
+            for (int j = 0; j < argsArray[i].length; j++) {
+                if (argsArray[i][j].equals(">") && j + 1 < argsArray[i].length) {
+                    outputFile = argsArray[i][j + 1]; // Get the file name to redirect output
+                    appendMode = false; // Set to overwrite mode
+                    argsArray[i] = Arrays.copyOfRange(argsArray[i], 0, j); // Remove redirection part from args
+                    break;
+                } else if (argsArray[i][j].equals(">>") && j + 1 < argsArray[i].length) {
+                    outputFile = argsArray[i][j + 1]; // Get the file name to redirect output
+                    appendMode = true; // Set to append mode
+                    argsArray[i] = Arrays.copyOfRange(argsArray[i], 0, j); // Remove redirection part from args
+                    break;
+                }
+            }
+
+            // Execute the command
+            boolean success = executeWithRedirection(commands[i], argsArray[i], outputFile, appendMode);
+            if (!success) {
+                System.out.println("Error executing command: " + commands[i].getClass().getSimpleName());
             }
         }
 
-        // Determine the command to execute based on commandName
-        switch (commandName.toLowerCase()) {
-            case "pwd":
-                cmd = new PwdCommand();
-                break;
-            case "ls":
-                cmd = new LsCommand();
-                break;
-            case "cd":
-                cmd = new CdCommand();
-                break;
-            case "cat":
-                cmd = new CatCommand();
-                break;
-            case "mkdir":
-                cmd = new MkdirCommand();
-                break;
-            case "rmdir":
-                cmd = new RmdirCommand();
-                break;
-            case "touch":
-                cmd = new TouchCommand();
-                break;
-            case "mv":
-                cmd = new MvCommand();
-                break;
-            case "rm":
-                cmd = new RmCommand();
-                break;
-            case "clear":
-                cmd = new ClearCommand();
-                break;
-            case "help":
-                cmd = new HelpCommand();
-                break;
-            default:
-                System.out.println("Command not recognized. Please try again.");
-                return;
-        }
-
-        // Execute the command and check the return value for success/failure
-        boolean success = executeWithRedirection(cmd, args, outputFile, appendMode);
-        if (!success) {
-            System.out.println("Error executing command: " + commandName);
-        }
+        // Restore the original output stream
+        System.setOut(originalOut);
     }
 
     private static boolean executeWithRedirection(Command cmd, String[] args, String outputFile, boolean appendMode) {
@@ -122,7 +124,7 @@ public class CommandExecutor {
             System.setOut(originalOut); // Restore original output stream
         }
     
-        // Close the FileOutputStream if it was opened
+        // Close the FileOutputStream if it was openeda
         if (fos != null) {
             try {
                 fos.close(); // Close the output stream
