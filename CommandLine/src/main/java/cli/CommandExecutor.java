@@ -7,7 +7,9 @@ import java.util.Arrays;
 
 import cli.commands.CatCommand;
 import cli.commands.CdCommand;
+import cli.commands.ClearCommand;
 import cli.commands.Command;
+import cli.commands.HelpCommand;
 import cli.commands.LsCommand;
 import cli.commands.MkdirCommand;
 import cli.commands.MvCommand;
@@ -15,8 +17,6 @@ import cli.commands.PwdCommand;
 import cli.commands.RmCommand;
 import cli.commands.RmdirCommand;
 import cli.commands.TouchCommand;
-import cli.commands.ClearCommand;
-import cli.commands.HelpCommand;
 
 /*
 CommandExecutor:
@@ -102,24 +102,35 @@ public class CommandExecutor {
     }
 
     private static boolean executeWithRedirection(Command cmd, String[] args, String outputFile, boolean appendMode) {
-        PrintStream originalOut = System.out; // Save original output stream
-
+        PrintStream originalOut = System.out; // Save the original output stream
+        FileOutputStream fos = null; // Declare FileOutputStream outside the try block
+    
         if (outputFile != null) {
             try {
-                FileOutputStream fos = new FileOutputStream(outputFile, appendMode); // true for append, false for overwrite
-                System.setOut(new PrintStream(fos));
+                fos = new FileOutputStream(outputFile, appendMode); // Create FileOutputStream
+                System.setOut(new PrintStream(fos)); // Redirect output
             } catch (IOException e) {
                 System.out.println("Error opening file: " + e.getMessage());
                 return false;
             }
         }
-
+    
         boolean success = cmd.execute(args); // Execute the command
-
+    
+        // Restore the original output stream
         if (outputFile != null) {
             System.setOut(originalOut); // Restore original output stream
         }
-
+    
+        // Close the FileOutputStream if it was opened
+        if (fos != null) {
+            try {
+                fos.close(); // Close the output stream
+            } catch (IOException e) {
+                System.out.println("Error closing file: " + e.getMessage());
+            }
+        }
+    
         return success;
     }
 }
