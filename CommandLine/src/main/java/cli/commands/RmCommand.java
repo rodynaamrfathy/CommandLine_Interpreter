@@ -8,7 +8,6 @@ public class RmCommand implements Command {
     @Override
     public boolean execute(String[] args) {
         if (args.length == 0) {
-            System.out.println("Usage: rm [-r] <filename>");
             return false;
         }
 
@@ -19,7 +18,6 @@ public class RmCommand implements Command {
         if ("-r".equals(args[0])) {
             recursive = true;
             if (args.length < 2) {
-                System.out.println("Usage: rm [-r] <filename>");
                 return false;
             }
             filename = args[1].trim();
@@ -27,31 +25,26 @@ public class RmCommand implements Command {
             filename = args[0].trim();
         }
 
-        // Resolve the path based on the current working directory
-        Path filePath = Path.of(System.getProperty("user.dir")).resolve(filename).normalize();
+        // Resolve the path based on the argument directly
+        Path filePath = Path.of(filename).normalize(); // Updated to accept absolute or relative paths
         File file = filePath.toFile();
 
-        if (file.exists()) {
-            if (recursive && file.isDirectory()) {
-                if (deleteDirectory(file)) {
-                    System.out.println("Directory " + filePath + " and all contents deleted");
-                    return true;
-                } else {
-                    System.out.println("Error deleting directory " + filePath);
-                    return false;
-                }
-            } else if (!recursive && file.isDirectory()) {
-                System.out.println("Cannot delete directory without -r option: " + filePath);
-                return false;
-            } else if (file.delete()) {
-                System.out.println("File " + filePath + " deleted");
+        // Check if file or directory exists before proceeding
+        if (!file.exists()) {
+            return false;
+        }
+
+        if (recursive && file.isDirectory()) {
+            if (deleteDirectory(file)) {
                 return true;
             } else {
-                System.out.println("Error deleting file " + filePath);
                 return false;
             }
+        } else if (!recursive && file.isDirectory()) {
+            return false;
+        } else if (file.delete()) {
+            return true;
         } else {
-            System.out.println("File " + filePath + " not found");
             return false;
         }
     }
