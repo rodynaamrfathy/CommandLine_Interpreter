@@ -22,25 +22,27 @@ public class MvCommand implements Command {
                 return false; // Source does not exist
             }
     
-            // Determine if destination is a directory or file
-            if (Files.isDirectory(destinationPath)) {
-                // If destination is a directory, create a new path for the moved file
-                destinationPath = destinationPath.resolve(sourcePath.getFileName());
+            // Check if the destination path exists
+            if (Files.exists(destinationPath)) {
+                // If destination is a directory, move the file into the directory
+                if (Files.isDirectory(destinationPath)) {
+                    destinationPath = destinationPath.resolve(sourcePath.getFileName());
+                }
             } else {
-                // Ensure destination's parent directory exists
-                if (Files.notExists(destinationPath.getParent())) {
+                // If destination doesn't exist, it's treated as a new name for renaming
+                Path parentDir = destinationPath.getParent();
+                if (parentDir != null && Files.notExists(parentDir)) {
                     return false; // Invalid destination directory
                 }
             }
     
-            // Move the file
+            // Move or rename the file or directory
             Files.move(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
-            return true; // Move was successful
+            return true; // Move or rename was successful
     
         } catch (IOException e) {
             e.printStackTrace();
-            return false; // An error occurred during the move
+            return false; // An error occurred during the move or rename
         }
     }
-    
 }
